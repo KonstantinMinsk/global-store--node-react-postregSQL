@@ -1,23 +1,29 @@
-require('dotenv').config();
-const express = require('express');
-const sequelize = require('./db');
+require('dotenv').config()
+const express = require('express')
+const sequelize = require('./db')
 const models = require('./models/models')
+const cors = require('cors')
 
 const PORT = process.env.PORT || 5000
 
 const app = express();
-// app.use();
+app.use(cors());
+app.use(express.json())
+
+app.get('/', (req, res) => {
+    res.status(200).json({ message: 'OK' })
+})
+
 
 const start = async () => {
     try {
-        await sequelize.authenticate() // use it to connect to the DB
-        await sequelize.sync() // this func will be compare state data with schema data
-        app.listen(PORT, function() {
-            console.log('Start', PORT);
-        })
-    } catch (err) {
-        console.log(err);
+        await sequelize.authenticate()
+        await sequelize.sync() // Compare data model vs data
+        app.listen(PORT, () => console.log(`Server started on port ${PORT}`))
+    } catch (e) {
+        console.log(e)
     }
 }
+
 
 start();
