@@ -43,11 +43,15 @@ class UserController {
     }
 
     async checkAuth(req, res, next) {
-        const { id } = req.query;
-        if (!id) {
-            return next(ApiError.badRequest('ID is not found'))
-        }
-        res.status(200).json({ id: id })
+        const jwtToken = generateJWT(req.user.id, req.user.email, req.user.role)
+        return res.json({ jwtToken })
+
+        // For testing during development
+        // const { id } = req.query;
+        // if (!id) {
+        //     return next(ApiError.badRequest('ID is not found'))
+        // }
+        // res.status(200).json({ id: id })
     }
 }
 
