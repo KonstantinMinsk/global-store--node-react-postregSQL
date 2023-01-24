@@ -1,42 +1,70 @@
-import React, {useState} from 'react';
+import React, {useContext} from 'react';
 import {Button, Container} from "react-bootstrap";
+import ModalProvider from '../context/ModalContext/ModalContextProvider';
+import { ModalContext } from "../context/ModalContext/ModalContext";
+
 // import CreateBrand from "../components/modals/CreateBrand";
 // import CreateDevice from "../components/modals/CreateDevice";
-// import CreateType from "../components/modals/CreateType";
 
 const Admin = () => {
-    const [brandVisible, setBrandVisible] = useState(false)
-    const [typeVisible, setTypeVisible] = useState(false)
-    const [deviceVisible, setDeviceVisible] = useState(false)
+    const { openModal } = useContext(ModalContext);    
+
+    const openBrandModal = () => {
+        openModal({
+            title: "Add brand",
+            placeholder: "Fil name of brand",
+            onChange: "MODAL MODAL MODAL"
+        });
+    }
+
+    const openTypeModal = () => {        
+        openModal({
+            title: 'Add type',
+            placeholder: "Fil name of type",
+        });
+    }
+
+    const openDeviceModal = () => {
+        openModal({
+            title: 'Add device',
+            placeholder: "Fil name of device",
+        });
+    }
 
     return (
         <Container className="d-flex flex-column">
             <Button
                 variant={"outline-dark"}
                 className="mt-4 p-2"
-                onClick={() => setTypeVisible(true)}
+                onClick={() => openTypeModal()}
             >
-                Добавить тип
+                Add type
             </Button>
             <Button
                 variant={"outline-dark"}
                 className="mt-4 p-2"
-                onClick={() => setBrandVisible(true)}
+                onClick={() => openBrandModal()}
             >
-                Добавить бренд
+                Add brand
             </Button>
             <Button
                 variant={"outline-dark"}
                 className="mt-4 p-2"
-                onClick={() => setDeviceVisible(true)}
+                onClick={() => openDeviceModal()}
             >
-                Добавить устройство
+                Add device
             </Button>
-            {/* <CreateBrand show={brandVisible} onHide={() => setBrandVisible(false)}/> */}
-            {/* <CreateDevice show={deviceVisible} onHide={() => setDeviceVisible(false)}/> */}
-            {/* <CreateType show={typeVisible} onHide={() => setTypeVisible(false)}/> */}
         </Container>
     );
 };
 
-export default Admin;
+
+const AdminPanel = () => {
+    return (
+        <ModalProvider>
+            <Admin />
+        </ModalProvider>
+    )
+}
+
+export default AdminPanel;
