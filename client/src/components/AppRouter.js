@@ -7,9 +7,9 @@ import {Context} from "../index";
 import {observer} from "mobx-react-lite";
 
 const AppRouter = observer(() => {
-    const {user} = useContext(Context);
+    const {user, device} = useContext(Context);
 
-    console.log(user);
+    console.log(user, device);
     
     return (
         <Switch>

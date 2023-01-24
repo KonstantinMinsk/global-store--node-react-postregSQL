@@ -1,13 +1,17 @@
 import {makeAutoObservable} from "mobx";
 
 const mockTypes = [
-    {id: 1, name: "Phones" },
-    {id: 2, name: "TV" }
+    {id: 1, name: "Mobiles" },
+    {id: 2, name: "TV" },
+    {id: 3, name: "Laptops" },
+    {id: 4, name: "Others" },
 ]
 
 const mockBrands = [
     {id: 1, name: "Samsung" },
-    {id: 2, name: "Voyge" }
+    {id: 2, name: "Voyge" },
+    {id: 3, name: "Horizonts" },
+    {id: 4, name: "Others" },
 ]
 
 const mockDevices = [
@@ -17,9 +21,9 @@ const mockDevices = [
 
 export default class DeviceStore {
     constructor() {
-        this._types = []
-        this._brands = []
-        this._devices = []
+        this._types = mockTypes
+        this._brands = mockBrands
+        this._devices = mockDevices
         this._selectedType = {}
         this._selectedBrand = {}
         this._page = 1
