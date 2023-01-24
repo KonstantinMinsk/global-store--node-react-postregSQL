@@ -1,4 +1,4 @@
-import {ADMIN_ROUTE, BASKET_ROUTE, DEVICE_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE, SHOP_ROUTE} from "./utils/consts";
+import {ADMIN_ROUTE, BASKET_ROUTE, DEVICE_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE, SHOP_ROUTE} from "./utils/constants";
 import Admin from "./pages/AdminPanel";
 import Basket from "./pages/Basket";
 import Shop from "./pages/Shop";
