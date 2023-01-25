@@ -4,7 +4,7 @@ import Basket from "./pages/Basket";
 import Shop from "./pages/Shop";
 import Auth from "./pages/Auth";
 import DevicePage from "./pages/DevicePage";
-import DeviceList from "./pages/DeviceList";
+import DeviceList from "./components/DeviceList";
 
 export const authRoutes = [
     {

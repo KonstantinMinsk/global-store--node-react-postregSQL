@@ -1,33 +1,43 @@
 import React, {useContext} from 'react';
 import {Button, Container} from "react-bootstrap";
-import ModalProvider from '../context/ModalContext/ModalContextProvider';
+import ModalProvider, { modalType } from '../context/ModalContext/ModalContextProvider';
 import { ModalContext } from "../context/ModalContext/ModalContext";
-
+import CustomModal from '../components/Modal';
 // import CreateBrand from "../components/modals/CreateBrand";
 // import CreateDevice from "../components/modals/CreateDevice";
 
 const Admin = () => {
-    const { openModal } = useContext(ModalContext);    
+    const { openModal, activeModal } = useContext(ModalContext);    
 
     const openBrandModal = () => {
         openModal({
-            title: "Add brand",
-            placeholder: "Fil name of brand",
-            onChange: "MODAL MODAL MODAL"
+            typeModal: modalType.ADD_BRAND,
+            modalContent: {
+                title: "Add brand",
+                placeholder: "Fil name of brand",
+                onChange: "MODAL MODAL MODAL"
+            }
         });
     }
 
     const openTypeModal = () => {        
         openModal({
-            title: 'Add type',
-            placeholder: "Fil name of type",
+            typeModal: modalType.ADD_TYPE,
+            modalContent: {
+                title: 'Add type',
+                placeholder: "Fil name of type",
+                onChange: "MODAL MODAL MODAL"
+            }
         });
     }
 
     const openDeviceModal = () => {
         openModal({
-            title: 'Add device',
-            placeholder: "Fil name of device",
+            typeModal: modalType.ADD_DEVICE,
+            modalContent: {
+                title: 'Add device',
+                placeholder: "Fil name of device",
+            }
         });
     }
 
@@ -54,6 +64,7 @@ const Admin = () => {
             >
                 Add device
             </Button>
+            {/* <CustomModal show={activeModal.typeModal} /> */}
         </Container>
     );
 };

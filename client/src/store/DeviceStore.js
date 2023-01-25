@@ -21,7 +21,12 @@ const mockDevices = [
 
 export default class DeviceStore {
     constructor() {
-        this._types = mockTypes
+        this._types = [
+            {id: 1, name: "Mobiles" },
+            {id: 2, name: "TV" },
+            {id: 3, name: "Laptops" },
+            {id: 4, name: "Others" },
+        ]
         this._brands = mockBrands
         this._devices = mockDevices
         this._selectedType = {}
@@ -43,6 +48,8 @@ export default class DeviceStore {
     }
 
     setSelectedType(type) {
+        console.log(type);
+        
         this.setPage(1)
         this._selectedType = type
     }

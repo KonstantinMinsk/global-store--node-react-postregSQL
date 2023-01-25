@@ -3,36 +3,43 @@ import React, {useState} from "react";
 import { ModalContext } from "./ModalContext";
 import CustomModal from "../../components/Modal";
 
+export const modalType = {
+    ADD_BRAND: 'ADD_BRAND',
+    ADD_TYPE: 'ADD_TYPE',
+    ADD_DEVICE: 'ADD_DEVICE'
+}
+
+const initActiveModal = {
+    typeModal: '',
+    modalContent: null
+}
+
 const ModalProvider = ({ children }) => {
-    const [modalOpened, setModalOpened] = useState(false);
-    const [modalContent, setModalContent] = useState();
+    const [activeModal, setIsActiveModal] = useState(initActiveModal);
     const [value, setValue] = useState('');
 
-    console.log(value);
-
-    const openModal = (modalConfig) => {
-        setModalContent(modalConfig);
-        setModalOpened(true);
+    const openModal = ({typeModal = '', modalContent = null}) => {
+        setIsActiveModal({ typeModal, modalContent });
     }
 
     const closeModal = () => {
-        setModalOpened(false);
-        setModalContent({})
+        setIsActiveModal(initActiveModal)
         setValue('')
     }
 
     const valueModalProvider = {
         openModal,
-        closeModal
+        closeModal,
+        activeModal
     }
 
     return (
         <div className="ModalContext">
             <ModalContext.Provider value={valueModalProvider}>
                 <CustomModal 
-                    show={modalOpened} 
-                    title={modalContent?.title} 
-                    placeholder={modalContent?.placeholder} 
+                    typeModal={activeModal.typeModal} 
+                    titleModal={activeModal.modalContent?.title} 
+                    placeholder={activeModal.modalContent?.placeholder} 
                     value={value}
                     setValue={setValue}
                 />
