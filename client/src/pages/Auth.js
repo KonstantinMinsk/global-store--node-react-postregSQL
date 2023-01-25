@@ -2,10 +2,9 @@ import React, {useContext, useState} from 'react';
 import {Container, Form} from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
-import Row from "react-bootstrap/Row";
 import {NavLink, useLocation, useHistory} from "react-router-dom";
 import {LOGIN_ROUTE, REGISTRATION_ROUTE, SHOP_ROUTE} from "../utils/constants";
-// import {login, registration} from "../http/userAPI";
+import {login, registration} from "../http/userAuth";
 import {observer} from "mobx-react-lite";
 import {Context} from "../index";
 
@@ -17,22 +16,22 @@ const Auth = observer(() => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    // const click = async () => {
-    //     try {
-    //         let data;
-    //         if (isLogin) {
-    //             data = await login(email, password);
-    //         } else {
-    //             data = await registration(email, password);
-    //         }
-    //         user.setUser(user)
-    //         user.setIsAuth(true)
-    //         history.push(SHOP_ROUTE)
-    //     } catch (e) {
-    //         alert(e.response.data.message)
-    //     }
+    const onClick = async () => {
+        try {
+            let data;
+            if (isLogin) {
+                data = await login(email, password);
+            } else {
+                data = await registration(email, password);
+            }
+            user.setUser(user)
+            user.setIsAuth(true)
+            history.push(SHOP_ROUTE)
+        } catch (e) {
+            alert(e.response.data.message)
+        }
+    }
 
-    // }
 
     return (
         <Container
@@ -55,25 +54,24 @@ const Auth = observer(() => {
                         onChange={e => setPassword(e.target.value)}
                         type="password"
                     />
-                    {isLogin ?
-                            <div>
-                                Нет аккаунта? <NavLink to={REGISTRATION_ROUTE}>Зарегистрируйся!</NavLink>
-                            </div>
-                            :
-                            <div>
-                                Есть аккаунт? <NavLink to={LOGIN_ROUTE}>Войдите!</NavLink>
-                            </div>
-                        }
-                    <div style={{ margin: '16px auto', width: '100%' }}>
-                        <Row RowColWidth='auto'>
+                    <div style={{ margin: '16px auto', width: '100%' }} className='d-grid'>
                             <Button
-                                // onClick={click}
+                                onClick={onClick}
                             >
                                 {isLogin ? 'Войти' : 'Регистрация'}
                             </Button>
-                        </Row>
                     </div>
-
+                    <div>
+                        {
+                            isLogin ?  
+                            <div>
+                                Нет аккаунта? <NavLink to={REGISTRATION_ROUTE}>Зарегистрируйся!</NavLink>
+                            </div>
+                            : <div>
+                                Есть аккаунт? <NavLink to={LOGIN_ROUTE}>Войдите!</NavLink>
+                            </div>
+                        }
+                    </div>
                 </Form>
             </Card>
         </Container>

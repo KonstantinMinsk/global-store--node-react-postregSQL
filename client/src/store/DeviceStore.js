@@ -47,9 +47,7 @@ export default class DeviceStore {
         this._devices = devices
     }
 
-    setSelectedType(type) {
-        console.log(type);
-        
+    setSelectedType(type) {        
         this.setPage(1)
         this._selectedType = type
     }

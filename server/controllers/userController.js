@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken')
 const {User, Basket} = require('../models/models')
 
 const generateJWT = (id, email, role) => {
-    jwt.sign(
+    return jwt.sign(
         { id, email, role }, 
         process.env.SECRET_KEY,
         { expiresIn: '24h'}
@@ -12,7 +12,7 @@ const generateJWT = (id, email, role) => {
 }
 
 class UserController {
-    async registration(req, res) {
+    async registration(req, res, next) {
         const { email, password, role } = req.body;
         if (!email || !password) {
             return next(ApiError.badRequest('Email or password is not correct'))
@@ -22,10 +22,10 @@ class UserController {
             return next(ApiError.badRequest('User already exist'))
         }
         const hasPassword = await bcrypt.hash(password, 5)
-        const user = await User.create({ email, password, role })
+        const user = await User.create({ email, password: hasPassword, role })
         const basket = await Basket.create({ userId: user.id })
-        const jwtToken  = generateJWT(user.id, email, role)
-        return res.json({ jwtToken })
+        const token  = generateJWT(user.id, email, role)
+        return res.json({ token })
     }
 
     async login(req, res, next) {
@@ -38,13 +38,13 @@ class UserController {
         if (!comparePassword) {
             return next(ApiError.internal('Password is not correct'));
         }
-        const jwtToken = generateJWT(user.id, user.email, user.role)
-        return res.json({ jwtToken })
+        const token = generateJWT(user.id, user.email, user.role)
+        return res.json({ token })
     }
 
     async checkAuth(req, res, next) {
-        const jwtToken = generateJWT(req.user.id, req.user.email, req.user.role)
-        return res.json({ jwtToken })
+        const token = generateJWT(req.user.id, req.user.email, req.user.role)
+        return res.json({ token })
 
         // For testing during development
         // const { id } = req.query;
