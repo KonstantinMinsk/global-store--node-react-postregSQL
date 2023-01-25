@@ -55,8 +55,7 @@ const Auth = observer(() => {
                         onChange={e => setPassword(e.target.value)}
                         type="password"
                     />
-                    <Row className="d-flex justify-content-between mt-3 pl-3 pr-3">
-                        {isLogin ?
+                    {isLogin ?
                             <div>
                                 Нет аккаунта? <NavLink to={REGISTRATION_ROUTE}>Зарегистрируйся!</NavLink>
                             </div>
@@ -65,13 +64,15 @@ const Auth = observer(() => {
                                 Есть аккаунт? <NavLink to={LOGIN_ROUTE}>Войдите!</NavLink>
                             </div>
                         }
-                        <Button
-                            variant={"outline-success"}
-                            // onClick={click}
-                        >
-                            {isLogin ? 'Войти' : 'Регистрация'}
-                        </Button>
-                    </Row>
+                    <div style={{ margin: '16px auto', width: '100%' }}>
+                        <Row RowColWidth='auto'>
+                            <Button
+                                // onClick={click}
+                            >
+                                {isLogin ? 'Войти' : 'Регистрация'}
+                            </Button>
+                        </Row>
+                    </div>
 
                 </Form>
             </Card>
