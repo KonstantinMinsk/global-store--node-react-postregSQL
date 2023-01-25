@@ -21,14 +21,9 @@ const mockDevices = [
 
 export default class DeviceStore {
     constructor() {
-        this._types = [
-            {id: 1, name: "Mobiles" },
-            {id: 2, name: "TV" },
-            {id: 3, name: "Laptops" },
-            {id: 4, name: "Others" },
-        ]
-        this._brands = mockBrands
-        this._devices = mockDevices
+        this._types = []
+        this._brands = []
+        this._devices = []
         this._selectedType = {}
         this._selectedBrand = {}
         this._page = 1

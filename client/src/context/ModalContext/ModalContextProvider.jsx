@@ -16,7 +16,6 @@ const initActiveModal = {
 
 const ModalProvider = ({ children }) => {
     const [activeModal, setIsActiveModal] = useState(initActiveModal);
-    const [value, setValue] = useState('');
 
     const openModal = ({typeModal = '', modalContent = null}) => {
         setIsActiveModal({ typeModal, modalContent });
@@ -24,7 +23,6 @@ const ModalProvider = ({ children }) => {
 
     const closeModal = () => {
         setIsActiveModal(initActiveModal)
-        setValue('')
     }
 
     const valueModalProvider = {
@@ -40,8 +38,6 @@ const ModalProvider = ({ children }) => {
                     typeModal={activeModal.typeModal} 
                     titleModal={activeModal.modalContent?.title} 
                     placeholder={activeModal.modalContent?.placeholder} 
-                    value={value}
-                    setValue={setValue}
                 />
                 {children}
             </ModalContext.Provider>

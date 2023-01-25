@@ -3,14 +3,15 @@ import Modal from "react-bootstrap/Modal";
 import {Button, Dropdown, Form, Row, Col} from "react-bootstrap"
 import { ModalContext } from "../context/ModalContext/ModalContext";
 import {Context} from "../index";
-
-// import {createBrand, createType} from "../../http/deviceAPI";
+import {observer} from "mobx-react-lite";
+import {createBrand, createType, createDevice} from "../http/deviceAPI";
 import { modalType } from './../context/ModalContext/ModalContextProvider';
 
-const CustomModal = ({typeModal, titleModal, placeholder, value = '', setValue = () => ({})}) => {
+const CustomModal = observer(({typeModal, titleModal, placeholder}) => {
     const {device} = useContext(Context)
-    const { closeModal } = useContext(ModalContext);       
+    const { closeModal } = useContext(ModalContext);   
 
+    const [value, setValue] = useState('');
     const [name, setName] = useState('')
     const [price, setPrice] = useState('')
     const [file, setFile] = useState(null)
@@ -26,33 +27,33 @@ const CustomModal = ({typeModal, titleModal, placeholder, value = '', setValue =
         setInfo(info.map(i => i.number === number ? {...i, [key]: value} : i))
     }
 
-    const selectFile = e => {
+    const selectFile = e => {        
         setFile(e.target.files[0])
     }
 
     const addBrand = () => {
-        // createBrand({name: value}).then(data => {
-        //     setValue('')
-        //     onHide()
-        // })
+        createBrand({name: value}).then(data => {
+            setValue('')
+            closeModal()
+        })
     }
 
     const addType = () => {
-        // createType({name: value}).then(data => {
-        //     setValue('')
-        //     onHide()
-        // })
-    }
+        createType({name: value}).then(data => {
+            setValue('')
+            closeModal()
+        })
+    }    
 
     const addDevice = () => {
         const formData = new FormData()
-        // formData.append('name', name)
-        // formData.append('price', `${price}`)
+        formData.append('name', name)
+        formData.append('price', `${price}`)
         formData.append('img', file)
-        // formData.append('brandId', device.selectedBrand.id)
-        // formData.append('typeId', device.selectedType.id)
-        // formData.append('info', JSON.stringify(info))
-        // createDevice(formData).then(data => onHide())
+        formData.append('brandId', device.selectedBrand.id)
+        formData.append('typeId', device.selectedType.id)
+        formData.append('info', JSON.stringify(info))
+        createDevice(formData).then(data => closeModal())
     }
 
     const onClickAdd = () => {
@@ -175,6 +176,6 @@ const CustomModal = ({typeModal, titleModal, placeholder, value = '', setValue =
             </Modal.Footer>
         </Modal>
     );
-};
+});
 
 export default CustomModal;

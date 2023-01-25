@@ -28,6 +28,7 @@ const NavBar = observer(() => {
                         <Button
                             variant={"outline-light"}
                             onClick={() => history.push(ADMIN_ROUTE)}
+                            className='me-2'
                         >
                             Admin panel
                         </Button>
